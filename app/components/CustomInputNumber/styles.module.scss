@@ -1,0 +1,81 @@
+$radius: 4px;
+
+.custom-input-number {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  input, button {
+    display: block;
+    box-sizing: border-box;
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+    flex: 0 0 48px;
+    text-align: center;
+    border-radius: $radius;
+
+    &:disabled {
+      &, &:hover ,&:active {
+        background: rgba(235, 235, 235);
+        color: rgb(150, 150, 150);
+        border-color: rgb(180, 180, 180);
+        cursor: default;
+      }
+    }
+  }
+
+  input {
+    $main-color: rgb(199, 199, 199);
+    $text-color: rgb(120, 120, 120);
+    width: 100%;
+    display: block;
+    -webkit-appearance: none;
+
+    border: 1px solid $main-color;
+    color: $text-color;
+    &:hover {
+      border-color: darken($main-color, 10%);
+      color: darken($text-color, 10%);
+    }
+    &:active {
+      border-color: darken($main-color, 25%);
+    }
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  button {
+    $light-blue: rgb(114, 164, 198);
+    cursor: pointer;
+    border: 1px solid $light-blue;
+    color: $light-blue;
+    background: white;
+    transition: .3s ease;
+
+    i {
+      font-size: 20px;
+    }
+
+    &:hover {
+      $color: darken($light-blue, 10%);
+      border-color: $color;
+      color: $color;
+    }
+    &:active {
+      $color: darken($light-blue, 30%);
+      border-color: $color;
+      color: $color;
+      background: lighten($light-blue, 35%);
+    }
+  }
+}
