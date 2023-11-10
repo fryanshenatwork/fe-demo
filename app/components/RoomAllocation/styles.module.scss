@@ -1,0 +1,13 @@
+.room-allocation {
+  padding: 1em;
+  .info-card {
+    margin: 1.25em 0;
+  }
+  .room {
+    margin: 1.25em 0;
+    
+    &:not(:last-child) {
+      border-bottom: 1px solid rgb(200, 200, 200)
+    }
+  }
+}

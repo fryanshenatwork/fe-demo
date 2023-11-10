@@ -3,9 +3,8 @@ $radius: 4px;
 .custom-input-number {
   display: flex;
   flex-flow: row nowrap;
-  gap: 8px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 8px 0;
+  width: 160px;
 
   input, button {
     display: block;
@@ -16,6 +15,13 @@ $radius: 4px;
     flex: 0 0 48px;
     text-align: center;
     border-radius: $radius;
+    margin: 0 4px;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
 
     &:disabled {
       &, &:hover ,&:active {

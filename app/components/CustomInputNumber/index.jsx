@@ -1,4 +1,4 @@
-import React, {useCallback, useState, useRef} from 'react';
+import React, {useCallback, useState, useRef, useEffect} from 'react';
 import styles from './styles.module.scss'
 import useLongPress from './hooks/useLongPress.js'
 import useEvent from './hooks/useEvent.js'
@@ -13,10 +13,12 @@ export default ({
   onChange = () => {},
   onBlur,
   disabled = false,
+  className,
 }) => {
   const [currentVal, setCurrentVal] = useState((n) => n || value)
   const elementRef = useRef(null)
-  const emitEvent = useEvent(elementRef, 'onChange', onChange)
+  const emitOnChangeEvent = useEvent(elementRef, 'customOnChange', onChange)
+  const emitOnBlurEvent = useEvent(elementRef, 'customOnBlur', onBlur)
   const isPressing = useRef(false)
 
   const validateDecimal = useCallback((current) => {
@@ -34,8 +36,8 @@ export default ({
     if (currentVal === result.toString()) { return }
     setCurrentVal(result.toString())
     elementRef.current.value = result.toString()
-    emitEvent()
-  }, [currentVal, validateDecimal, onChange, emitEvent])
+    emitOnChangeEvent()
+  }, [currentVal, validateDecimal, onChange, emitOnChangeEvent])
 
 
   const addButtonActions = useLongPress({
@@ -52,9 +54,17 @@ export default ({
     onEnd: () => setTimeout(() => isPressing.current = false, 0),
   })
 
+  useEffect(() => {
+    if (Number(value) === Number(currentVal)) { return }
+    setCurrentVal(value)
+  }, [value])
 
   return (
-    <div className={styles['custom-input-number']}>
+    <div
+      className={[styles['custom-input-number'],
+      className].join(' ')}
+      onBlur={emitOnBlurEvent}
+    >
       <button
         disabled={currentVal <= min || disabled}
         {...minusButtonActions}
@@ -69,7 +79,6 @@ export default ({
         min={min}
         max={max}
         onChange={(e) => { handleOnChange(e.target.value); }}
-        onBlur={onBlur}
         disabled={disabled}
       />
       <button
